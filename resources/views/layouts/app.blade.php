@@ -6,7 +6,10 @@
     <title>@yield('title', 'Gestão de Patrimônio')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 overflow-hidden">
+    <!-- Overlay Backdrop -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-sm hidden z-30 md:hidden" onclick="toggleSidebar()"></div>
+
     <div class="flex h-screen bg-gray-50 dark:bg-gray-800">
         <!-- Sidebar -->
         @include('components.sidebar')
@@ -25,7 +28,7 @@
         </div>
     </div>
 
-    <!-- Dark Mode Toggle Script -->
+    <!-- Scripts -->
     <script>
         // Verificar preferência de tema salva ou preferência do sistema
         function initTheme() {
@@ -46,6 +49,21 @@
             
             const isDark = htmlElement.classList.contains('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+        
+        window.toggleSidebar = function() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            sidebar.classList.toggle('hidden');
+            overlay.classList.toggle('hidden');
+            
+            // Prevenir scroll do body quando sidebar está aberto
+            if (!sidebar.classList.contains('hidden')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
         }
         
         initTheme();

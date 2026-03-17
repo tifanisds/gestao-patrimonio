@@ -1,4 +1,4 @@
-<aside id="sidebar" class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto shadow-sm transition-colors duration-300 hidden md:block">
+<aside id="sidebar" class="fixed md:relative w-64 h-screen md:h-auto bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto shadow-sm transition-colors duration-300 hidden md:block z-40">
     <!-- Logo Section -->
     <div class="p-6 border-b border-gray-200 dark:border-gray-700">
         <div class="flex items-center gap-3">
