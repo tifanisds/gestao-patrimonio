@@ -12,7 +12,8 @@ class FornecedorController extends Controller
      */
     public function index()
     {
-        //
+        $fornecedores = [];
+        return view('fornecedores.index', compact('fornecedores'));
     }
 
     /**
@@ -20,7 +21,7 @@ class FornecedorController extends Controller
      */
     public function create()
     {
-        //
+        return view('fornecedores.create');
     }
 
     /**
@@ -28,7 +29,7 @@ class FornecedorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Lógica de armazenamento será implementada depois
     }
 
     /**
@@ -36,7 +37,7 @@ class FornecedorController extends Controller
      */
     public function show(Fornecedor $fornecedor)
     {
-        //
+        return view('fornecedores.show', compact('fornecedor'));
     }
 
     /**
@@ -44,7 +45,7 @@ class FornecedorController extends Controller
      */
     public function edit(Fornecedor $fornecedor)
     {
-        //
+        return view('fornecedores.edit', compact('fornecedor'));
     }
 
     /**
@@ -52,7 +53,7 @@ class FornecedorController extends Controller
      */
     public function update(Request $request, Fornecedor $fornecedor)
     {
-        //
+        // Lógica de atualização será implementada depois
     }
 
     /**
@@ -60,6 +61,6 @@ class FornecedorController extends Controller
      */
     public function destroy(Fornecedor $fornecedor)
     {
-        //
+        // Lógica de remoção será implementada depois
     }
 }
