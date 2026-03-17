@@ -12,7 +12,7 @@ class FornecedorController extends Controller
      */
     public function index()
     {
-        $fornecedores = [];
+        $fornecedores = Fornecedor::all();
         return view('fornecedores.index', compact('fornecedores'));
     }
 
@@ -29,7 +29,17 @@ class FornecedorController extends Controller
      */
     public function store(Request $request)
     {
-        // Lógica de armazenamento será implementada depois
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+            'cnpj' => 'nullable|string|max:18',
+            'telefone' => 'nullable|string|max:15',
+            'email' => 'nullable|email|max:255',
+        ]);
+
+        Fornecedor::create($validated);
+
+        return redirect()->route('fornecedores.index')
+            ->with('success', 'Fornecedor cadastrado com sucesso!');
     }
 
     /**
@@ -53,7 +63,17 @@ class FornecedorController extends Controller
      */
     public function update(Request $request, Fornecedor $fornecedor)
     {
-        // Lógica de atualização será implementada depois
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+            'cnpj' => 'nullable|string|max:18',
+            'telefone' => 'nullable|string|max:15',
+            'email' => 'nullable|email|max:255',
+        ]);
+
+        $fornecedor->update($validated);
+
+        return redirect()->route('fornecedores.show', $fornecedor)
+            ->with('success', 'Fornecedor atualizado com sucesso!');
     }
 
     /**
@@ -61,6 +81,9 @@ class FornecedorController extends Controller
      */
     public function destroy(Fornecedor $fornecedor)
     {
-        // Lógica de remoção será implementada depois
+        $fornecedor->delete();
+
+        return redirect()->route('fornecedores.index')
+            ->with('success', 'Fornecedor deletado com sucesso!');
     }
 }
