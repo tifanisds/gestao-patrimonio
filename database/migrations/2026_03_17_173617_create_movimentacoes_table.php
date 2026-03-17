@@ -14,19 +14,22 @@ return new class extends Migration
         Schema::create('movimentacoes', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('patrimonio_id')->constrained('patrimonios');
+            $table->foreignId('patrimonio_id')->constrained('patrimonios')->cascadeOnDelete();;
 
             $table->foreignId('localizacao_origem_id')
                 ->nullable()
-                ->constrained('localizacoes');
+                ->constrained('localizacoes')
+                ->cascadeOnDelete();;
 
             $table->foreignId('localizacao_destino_id')
                 ->nullable()
-                ->constrained('localizacoes');
+                ->constrained('localizacoes')
+                ->cascadeOnDelete();
 
             $table->foreignId('usuario_responsavel_id')
                 ->nullable()
-                ->constrained('usuarios');
+                ->constrained('usuarios')
+                ->cascadeOnDelete();
 
             $table->text('motivo')->nullable();
 
