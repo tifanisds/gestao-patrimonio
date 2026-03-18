@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\LocalizacaoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,5 +24,12 @@ Route::resource('fornecedores', FornecedorController::class, [
 Route::resource('categorias', CategoriaController::class, [
     'parameters' => [
         'categorias' => 'categoria'
+    ]
+]);
+
+// Rotas de Localizações
+Route::resource('localizacoes', LocalizacaoController::class, [
+    'parameters' => [
+        'localizacoes' => 'localizacao'
     ]
 ]);
