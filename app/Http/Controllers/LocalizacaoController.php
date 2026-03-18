@@ -21,7 +21,7 @@ class LocalizacaoController extends Controller
      */
     public function create()
     {
-        //
+        return view('localizacoes.create');
     }
 
     /**
@@ -29,7 +29,18 @@ class LocalizacaoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+            'setor' => 'required|string|max:255',
+            'bloco' => 'nullable|string|max:255',
+            'andar' => 'required|string|max:255',
+            'descricao' => 'nullable|string|max:1000',
+        ]);
+
+        Localizacao::create($validated);
+
+        return redirect()->route('localizacoes.index')
+            ->with('success', 'Localização cadastrada com sucesso!');
     }
 
     /**
@@ -37,7 +48,7 @@ class LocalizacaoController extends Controller
      */
     public function show(Localizacao $localizacao)
     {
-        //
+        return view('localizacoes.show', compact('localizacao'));
     }
 
     /**
@@ -45,7 +56,7 @@ class LocalizacaoController extends Controller
      */
     public function edit(Localizacao $localizacao)
     {
-        //
+        return view('localizacoes.edit', compact('localizacao'));
     }
 
     /**
@@ -53,7 +64,18 @@ class LocalizacaoController extends Controller
      */
     public function update(Request $request, Localizacao $localizacao)
     {
-        //
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+            'setor' => 'required|string|max:255',
+            'bloco' => 'nullable|string|max:255',
+            'andar' => 'required|string|max:255',
+            'descricao' => 'nullable|string|max:1000',
+        ]);
+
+        $localizacao->update($validated);
+
+        return redirect()->route('localizacoes.show', $localizacao)
+            ->with('success', 'Localização atualizada com sucesso!');
     }
 
     /**
@@ -61,6 +83,9 @@ class LocalizacaoController extends Controller
      */
     public function destroy(Localizacao $localizacao)
     {
-        //
+        $localizacao->delete();
+
+        return redirect()->route('localizacoes.index')
+            ->with('success', 'Localização deletada com sucesso!');
     }
 }
