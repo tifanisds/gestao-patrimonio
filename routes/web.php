@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\LocalizacaoController;
+use App\Http\Controllers\PatrimonioController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,5 +32,12 @@ Route::resource('categorias', CategoriaController::class, [
 Route::resource('localizacoes', LocalizacaoController::class, [
     'parameters' => [
         'localizacoes' => 'localizacao'
+    ]
+]);
+
+// Rotas de Patrimônios
+Route::resource('patrimonios', PatrimonioController::class, [
+    'parameters' => [
+        'patrimonios' => 'patrimonio'
     ]
 ]);
