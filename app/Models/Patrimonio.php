@@ -21,6 +21,11 @@ class Patrimonio extends Model
         'observacoes',
     ];
 
+    protected $casts = [
+        'data_aquisicao' => 'date',
+        'valor' => 'decimal:2',
+    ];
+
     public function categoria()
     {
         return $this->belongsTo(Categoria::class);

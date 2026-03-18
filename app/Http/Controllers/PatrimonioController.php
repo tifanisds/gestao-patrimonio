@@ -62,7 +62,7 @@ class PatrimonioController extends Controller
      */
     public function show(Patrimonio $patrimonio)
     {
-        //
+        return view('patrimonios.show', compact('patrimonio'));
     }
 
     /**
@@ -70,7 +70,12 @@ class PatrimonioController extends Controller
      */
     public function edit(Patrimonio $patrimonio)
     {
-        //
+        $categorias = Categoria::all();
+        $localizacoes = Localizacao::all();
+        $fornecedores = Fornecedor::all();
+        $usuarios = User::all();
+        
+        return view('patrimonios.edit', compact('patrimonio', 'categorias', 'localizacoes', 'fornecedores', 'usuarios'));
     }
 
     /**
@@ -78,7 +83,23 @@ class PatrimonioController extends Controller
      */
     public function update(Request $request, Patrimonio $patrimonio)
     {
-        //
+        $validated = $request->validate([
+            'codigo_identificacao' => 'required|string|max:255|unique:patrimonios,codigo_identificacao,' . $patrimonio->id,
+            'descricao' => 'required|string|max:1000',
+            'categoria_id' => 'required|exists:categorias,id',
+            'localizacao_id' => 'required|exists:localizacoes,id',
+            'usuario_responsavel_id' => 'nullable|exists:users,id',
+            'fornecedor_id' => 'nullable|exists:fornecedores,id',
+            'data_aquisicao' => 'nullable|date',
+            'valor' => 'nullable|numeric|min:0',
+            'estado' => 'required|in:novo,bom,regular,ruim,inservivel',
+            'observacoes' => 'nullable|string|max:1000',
+        ]);
+
+        $patrimonio->update($validated);
+
+        return redirect()->route('patrimonios.show', $patrimonio)
+            ->with('success', 'Patrimônio atualizado com sucesso!');
     }
 
     /**
@@ -86,6 +107,9 @@ class PatrimonioController extends Controller
      */
     public function destroy(Patrimonio $patrimonio)
     {
-        //
+        $patrimonio->delete();
+
+        return redirect()->route('patrimonios.index')
+            ->with('success', 'Patrimônio deletado com sucesso!');
     }
 }
