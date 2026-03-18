@@ -12,4 +12,8 @@ Route::get('/dashboard', function () {
 });
 
 // Rotas de Fornecedores
-Route::resource('fornecedores', FornecedorController::class);
+Route::resource('fornecedores', FornecedorController::class, [
+    'parameters' => [
+        'fornecedores' => 'fornecedor'
+    ]
+]);
