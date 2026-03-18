@@ -7,6 +7,7 @@ use App\Http\Controllers\LocalizacaoController;
 use App\Http\Controllers\PatrimonioController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\MovimentacaoController;
+use App\Http\Controllers\ManutencaoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,5 +56,12 @@ Route::resource('usuarios', UsuarioController::class, [
 Route::resource('movimentacoes', MovimentacaoController::class, [
     'parameters' => [
         'movimentacoes' => 'movimentacao'
+    ]
+]);
+
+// Rotas de Manutenções
+Route::resource('manutencoes', ManutencaoController::class, [
+    'parameters' => [
+        'manutencoes' => 'manutencao'
     ]
 ]);

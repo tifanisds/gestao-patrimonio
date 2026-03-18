@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Movimentações - Gestão de Patrimônio')
+@section('title', 'Manutenções - Gestão de Patrimônio')
 
-@section('breadcrumb', 'Movimentações')
+@section('breadcrumb', 'Manutenções')
 
 @section('content')
     <!-- Success Message -->
@@ -18,15 +18,15 @@
     <!-- Page Header -->
     <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
         <div>
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Movimentações</h1>
-            <p class="text-gray-600 dark:text-gray-400">Gerenciar todas as movimentações de patrimônios</p>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Manutenções</h1>
+            <p class="text-gray-600 dark:text-gray-400">Gerenciar todos os registros de manutenção</p>
         </div>
         <div class="mt-4 md:mt-0">
-            <a href="{{ route('movimentacoes.create') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-900 dark:bg-blue-700 text-white rounded-lg hover:bg-blue-800 dark:hover:bg-blue-600 transition-colors duration-200 font-medium">
+            <a href="{{ route('manutencoes.create') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-900 dark:bg-blue-700 text-white rounded-lg hover:bg-blue-800 dark:hover:bg-blue-600 transition-colors duration-200 font-medium">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                 </svg>
-                Nova Movimentação
+                Nova Manutenção
             </a>
         </div>
     </div>
@@ -36,7 +36,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Buscar</label>
-                <input type="text" placeholder="Patrimônio ou localização..." class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-900 dark:focus:ring-blue-400">
+                <input type="text" placeholder="Patrimônio ou descrição..." class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-900 dark:focus:ring-blue-400">
             </div>
             <div class="flex items-end">
                 <button class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200 font-medium">Filtrar</button>
@@ -48,7 +48,7 @@
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
         <!-- Table Header -->
         <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Lista de Movimentações</h2>
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Lista de Manutenções</h2>
         </div>
 
         <!-- Table -->
@@ -57,40 +57,58 @@
                 <thead class="bg-gray-50 dark:bg-gray-700">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">Patrimônio</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">Origem</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">Destino</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">Descrição</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">Tipo</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">Data</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">Responsável</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">Custo</th>
                         <th class="px-6 py-3 text-right text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">Ações</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                    @forelse($movimentacoes as $movimentacao)
+                    @forelse($manutencoes as $manutencao)
                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150">
                             <td class="px-6 py-4">
-                                <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $movimentacao->patrimonio->codigo_identificacao ?? '-' }}</div>
-                                <div class="text-xs text-gray-500 dark:text-gray-400">{{ \Str::limit($movimentacao->patrimonio->descricao ?? '', 40) }}</div>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $manutencao->patrimonio->codigo_identificacao ?? '-' }}</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">{{ \Str::limit($manutencao->patrimonio->descricao ?? '', 40) }}</div>
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">{{ $movimentacao->localizacaoOrigem->nome ?? '-' }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">{{ $movimentacao->localizacaoDestino->nome ?? '-' }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">{{ $movimentacao->data_movimentacao->format('d/m/Y H:i') }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">{{ $movimentacao->usuarioResponsavel->name ?? '-' }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">{{ \Str::limit($manutencao->descricao, 40) }}</td>
+                            <td class="px-6 py-4 text-sm">
+                                @if($manutencao->tipo === 'preventiva')
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300">Preventiva</span>
+                                @else
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 dark:bg-orange-900/20 text-orange-800 dark:text-orange-300">Corretiva</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">
+                                @if($manutencao->data_manutencao)
+                                    {{ $manutencao->data_manutencao->format('d/m/Y') }}
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
+                                @if($manutencao->custo)
+                                    R$ {{ number_format($manutencao->custo, 2, ',', '.') }}
+                                @else
+                                    -
+                                @endif
+                            </td>
                             <td class="px-6 py-4 text-right">
                                 <div class="flex items-center justify-end gap-2">
-                                    <a href="{{ route('movimentacoes.show', $movimentacao) }}" class="inline-flex items-center gap-1 px-3 py-1 text-sm text-blue-900 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded transition-colors duration-200">
+                                    <a href="{{ route('manutencoes.show', $manutencao) }}" class="inline-flex items-center gap-1 px-3 py-1 text-sm text-blue-900 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded transition-colors duration-200">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                         </svg>
                                         Ver
                                     </a>
-                                    <a href="{{ route('movimentacoes.edit', $movimentacao) }}" class="inline-flex items-center gap-1 px-3 py-1 text-sm text-amber-900 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded transition-colors duration-200">
+                                    <a href="{{ route('manutencoes.edit', $manutencao) }}" class="inline-flex items-center gap-1 px-3 py-1 text-sm text-amber-900 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded transition-colors duration-200">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                         </svg>
                                         Editar
                                     </a>
-                                    <form action="{{ route('movimentacoes.destroy', $movimentacao) }}" method="POST" class="inline" onsubmit="return confirm('Tem certeza que deseja deletar esta movimentação?')">
+                                    <form action="{{ route('manutencoes.destroy', $manutencao) }}" method="POST" class="inline" onsubmit="return confirm('Tem certeza que deseja deletar esta manutenção?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="inline-flex items-center gap-1 px-3 py-1 text-sm text-red-900 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors duration-200">
@@ -108,10 +126,10 @@
                             <td colspan="6" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
                                 <div class="flex flex-col items-center justify-center gap-2">
                                     <svg class="w-12 h-12 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                     </svg>
-                                    <span>Nenhuma movimentação cadastrada</span>
-                                    <a href="{{ route('movimentacoes.create') }}" class="text-blue-900 dark:text-blue-400 hover:underline mt-2">Cadastre a primeira agora</a>
+                                    <span>Nenhuma manutenção cadastrada</span>
+                                    <a href="{{ route('manutencoes.create') }}" class="text-blue-900 dark:text-blue-400 hover:underline mt-2">Cadastre a primeira agora</a>
                                 </div>
                             </td>
                         </tr>
@@ -123,7 +141,7 @@
         <!-- Pagination -->
         <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
             <div class="text-sm text-gray-600 dark:text-gray-400">
-                Exibindo <span class="font-medium">{{ $movimentacoes->count() }}</span> de <span class="font-medium">{{ $movimentacoes->count() }}</span> resultados
+                Exibindo <span class="font-medium">{{ $manutencoes->count() }}</span> de <span class="font-medium">{{ $manutencoes->count() }}</span> resultados
             </div>
             <div class="flex gap-2">
                 <button class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Anterior</button>

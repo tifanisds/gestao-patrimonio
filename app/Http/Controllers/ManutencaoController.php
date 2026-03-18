@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Manutencao;
+use App\Models\Patrimonio;
 use Illuminate\Http\Request;
 
 class ManutencaoController extends Controller
@@ -12,7 +13,8 @@ class ManutencaoController extends Controller
      */
     public function index()
     {
-        //
+        $manutencoes = Manutencao::all();
+        return view('manutencoes.index', compact('manutencoes'));
     }
 
     /**
@@ -20,7 +22,8 @@ class ManutencaoController extends Controller
      */
     public function create()
     {
-        //
+        $patrimonios = Patrimonio::all();
+        return view('manutencoes.create', compact('patrimonios'));
     }
 
     /**
@@ -28,7 +31,18 @@ class ManutencaoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'patrimonio_id' => 'required|exists:patrimonios,id',
+            'descricao' => 'required|string|max:1000',
+            'data_manutencao' => 'nullable|date',
+            'custo' => 'nullable|numeric|min:0',
+            'tipo' => 'required|in:preventiva,corretiva',
+        ]);
+
+        Manutencao::create($validated);
+
+        return redirect()->route('manutencoes.index')
+            ->with('success', 'Manutenção cadastrada com sucesso!');
     }
 
     /**
@@ -36,7 +50,7 @@ class ManutencaoController extends Controller
      */
     public function show(Manutencao $manutencao)
     {
-        //
+        return view('manutencoes.show', compact('manutencao'));
     }
 
     /**
@@ -44,7 +58,8 @@ class ManutencaoController extends Controller
      */
     public function edit(Manutencao $manutencao)
     {
-        //
+        $patrimonios = Patrimonio::all();
+        return view('manutencoes.edit', compact('manutencao', 'patrimonios'));
     }
 
     /**
@@ -52,7 +67,18 @@ class ManutencaoController extends Controller
      */
     public function update(Request $request, Manutencao $manutencao)
     {
-        //
+        $validated = $request->validate([
+            'patrimonio_id' => 'required|exists:patrimonios,id',
+            'descricao' => 'required|string|max:1000',
+            'data_manutencao' => 'nullable|date',
+            'custo' => 'nullable|numeric|min:0',
+            'tipo' => 'required|in:preventiva,corretiva',
+        ]);
+
+        $manutencao->update($validated);
+
+        return redirect()->route('manutencoes.show', $manutencao)
+            ->with('success', 'Manutenção atualizada com sucesso!');
     }
 
     /**
@@ -60,6 +86,9 @@ class ManutencaoController extends Controller
      */
     public function destroy(Manutencao $manutencao)
     {
-        //
+        $manutencao->delete();
+
+        return redirect()->route('manutencoes.index')
+            ->with('success', 'Manutenção deletada com sucesso!');
     }
 }
