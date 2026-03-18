@@ -5,6 +5,8 @@ use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\LocalizacaoController;
 use App\Http\Controllers\PatrimonioController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\MovimentacaoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,5 +41,19 @@ Route::resource('localizacoes', LocalizacaoController::class, [
 Route::resource('patrimonios', PatrimonioController::class, [
     'parameters' => [
         'patrimonios' => 'patrimonio'
+    ]
+]);
+
+// Rotas de Usuários
+Route::resource('usuarios', UsuarioController::class, [
+    'parameters' => [
+        'usuarios' => 'usuario'
+    ]
+]);
+
+// Rotas de Movimentações
+Route::resource('movimentacoes', MovimentacaoController::class, [
+    'parameters' => [
+        'movimentacoes' => 'movimentacao'
     ]
 ]);
